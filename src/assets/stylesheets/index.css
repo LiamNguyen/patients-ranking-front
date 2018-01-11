@@ -1,0 +1,55 @@
+@font-face {
+  font-family: 'Lobster Regular';
+  src: url('../fonts/Lobster-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'TitilliumWeb-ExtraLight';
+  src: url('../fonts/TitilliumWeb-ExtraLight.ttf');
+}
+
+@font-face {
+  font-family: 'TitilliumWeb-Light';
+  src: url('../fonts/TitilliumWeb-Light.ttf');
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  height: 100%;
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
+  overflow: auto;
+  -webkit-background-size: cover !important;
+  -moz-background-size: cover !important;
+  -o-background-size: cover !important;
+  background-size: cover !important;
+}
+
+.app {
+  height: 100%;
+  background-color: white;
+}
+
+.screen-container {
+  height: 100%;
+  width: 100%;
+}
+
+.screen-content {
+  overflow-y: auto;
+}
+
+/* Overriding alert box style from react-s-alert  */
+.s-alert-wrapper .s-alert-box {
+  position: absolute !important;
+  z-index: 1500;
+}

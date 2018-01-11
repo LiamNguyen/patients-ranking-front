@@ -1,0 +1,42 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+.vscode
+flow-typed/npm
+*.sublime-workspace
+*.sublime-project
+*.todo
+.env
+### Node ###
+# Source Map
+*.map
+# Logs
+logs
+*.log
+.idea
+.iml
+
+# dependencies
+/node_modules
+
+# testing
+/coverage
+
+# production
+/build
+
+# mobile production
+/mobile
+
+# version
+version.txt
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

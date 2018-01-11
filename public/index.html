@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <title>Glue</title>
+  </head>
+  <body>
+    <noscript>
+      <br/><br/>
+      <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+          <div class="panel panel-default">
+            <div class="panel-body text-center">
+              JavaScript ei ole käytössä tai sitä ei tueta käyttämässäsi selaimessa.
+              <br/>
+              Tuetut selaimet ovat IE 9 ja uudempi, Chrome, Firefox ja Safari.
+              <hr/>
+              JavaScript is disabled or not supported by your browser.
+              <br/>
+              Supported browsers include IE 9 or later, Chrome, Firefox and Safari.
+              <hr/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </noscript>
+    <script>
+      window.ENV = 'production';
+      window.API_HOST = '';
+      window.APP_HOST = '';
+    </script>    
+    <div id="root"></div>    
+  </body>
+</html>
