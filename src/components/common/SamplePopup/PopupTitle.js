@@ -5,10 +5,8 @@ const titleStyle = {
   fontSize: 32,
   textAlign: 'center',
   fontWeight: 'bold'
-}
+};
 
-const PopupTitle = ({ text }) => (
-  <p style={titleStyle}>{text}</p>
-);
+const PopupTitle = ({ text }) => <p style={titleStyle}>{text}</p>;
 
 export default PopupTitle;

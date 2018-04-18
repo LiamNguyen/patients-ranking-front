@@ -11,27 +11,23 @@ var semver = require('semver');
 var merge = require('merge-stream');
 
 // Build browser bundle for deployment
-gulp.task('build', [
-  'git:version',
-  'copy:version',
-  'build:browser'
-]);
+gulp.task('build', ['git:version', 'copy:version', 'build:browser']);
 
 // Put environment to index.html when building bundle
 // for browser with yarn
 gulp.task('build:browser', function() {
   gulp
-  .src(['./build/index.html'])
-  .pipe(
-    printEnv({
-      ENV: 'production',
-      API_HOST: 'https://gofore-glue-api.herokuapp.com',
-      APP_HOST: 'https://gofore-glue.herokuapp.com',
-      SLACK_BASE_URL: 'https://lets-dev.slack.com',
-      SLACK_IMAGE_BASE_URL: 'https://platform.slack-edge.com/img'
-    })
-  )
-  .pipe(gulp.dest('./build'));
+    .src(['./build/index.html'])
+    .pipe(
+      printEnv({
+        ENV: 'production',
+        API_HOST: 'https://gofore-glue-api.herokuapp.com',
+        APP_HOST: 'https://gofore-glue.herokuapp.com',
+        SLACK_BASE_URL: 'https://lets-dev.slack.com',
+        SLACK_IMAGE_BASE_URL: 'https://platform.slack-edge.com/img'
+      })
+    )
+    .pipe(gulp.dest('./build'));
 });
 
 // Build mobile bundle for Cordova
@@ -89,7 +85,7 @@ gulp.task('copy:mobile', function() {
     .src(['./build/static/css/*.css'])
     .pipe(rename('main.css'))
     .pipe(gulp.dest('./mobile/static/css'));
-  
+
   var copyCssMap = gulp
     .src(['./build/static/css/*.map'])
     .pipe(rename('main.css.map'))
@@ -99,7 +95,7 @@ gulp.task('copy:mobile', function() {
     .src(['./build/static/js/*.js'])
     .pipe(rename('main.js'))
     .pipe(gulp.dest('./mobile/static/js'));
-  
+
   var copyJsMap = gulp
     .src(['./build/static/js/*.map'])
     .pipe(rename('main.js.map'))
@@ -108,15 +104,11 @@ gulp.task('copy:mobile', function() {
 });
 
 gulp.task('copy:version', function() {
-  gulp
-    .src(['./version.txt'])
-    .pipe(gulp.dest('./build'));
+  gulp.src(['./version.txt']).pipe(gulp.dest('./build'));
 });
 
 gulp.task('copy:version:mobile', function() {
-  gulp
-    .src(['./version.txt'])
-    .pipe(gulp.dest('./mobile'));
+  gulp.src(['./version.txt']).pipe(gulp.dest('./mobile'));
 });
 
 // Helpers

@@ -1,9 +1,6 @@
 import SlackConstants from '../constants/SlackConstants';
 
-const {
-  GET_USERS_LIST,
-  SEND_INVITATION
-} = SlackConstants;
+const { GET_USERS_LIST, SEND_INVITATION } = SlackConstants;
 
 export const getUsersList = () => ({
   type: `${GET_USERS_LIST}_REQUEST`

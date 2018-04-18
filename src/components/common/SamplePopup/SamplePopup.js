@@ -12,7 +12,7 @@ const styles = {
     right: 0,
     bottom: 0,
     left: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)'
   },
   bodyStyle: {
     width: '70%',
@@ -31,13 +31,9 @@ const Locale = {
   }
 };
 
-const SamplePopup = ({
-  show = false,
-  calendarEvent,
-  onDoneButtonClick
-}) => (
-  show
-    ? <div style={styles.modalStyle}>
+const SamplePopup = ({ show = false, calendarEvent, onDoneButtonClick }) =>
+  show ? (
+    <div style={styles.modalStyle}>
       <div style={styles.bodyStyle}>
         <PopupTitle text={Locale.text.title} />
         <SuccessIcon />
@@ -48,7 +44,6 @@ const SamplePopup = ({
         />
       </div>
     </div>
-    : null
-);
+  ) : null;
 
 export default SamplePopup;

@@ -28,4 +28,4 @@ export default {
   get isMobile() {
     return env === 'mobile';
   }
-}
+};

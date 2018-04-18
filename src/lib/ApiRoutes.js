@@ -24,4 +24,4 @@ export default {
   createEvent(userId) {
     return `${this.base}/event/${userId}`;
   }
-}
+};

@@ -5,10 +5,8 @@ const titleStyle = {
   fontSize: 29,
   textAlign: 'center',
   fontWeight: 'bold'
-}
+};
 
-const CardTitle = ({ title }) => (
-  <p style={titleStyle}>{title}</p>
-);
+const CardTitle = ({ title }) => <p style={titleStyle}>{title}</p>;
 
 export default CardTitle;

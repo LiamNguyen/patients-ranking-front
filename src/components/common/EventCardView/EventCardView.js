@@ -12,9 +12,8 @@ const cardViewContainerStyle = {
   boxShadow: 'grey 0 0 6px 0',
   borderStyle: 'solid',
   borderColor: 'transparent',
-  borderWidth: 5  
-}
-
+  borderWidth: 5
+};
 
 const EventCardView = ({
   title,
@@ -25,8 +24,8 @@ const EventCardView = ({
   onJoinEvent,
   onCancelEvent,
   eventId,
-	onRecreateEvent,
-	onGoingPeople,
+  onRecreateEvent,
+  onGoingPeople,
   hasEventFinished,
   justAddedStyle,
   onInviteButtonClick
@@ -39,11 +38,7 @@ const EventCardView = ({
     className="event-cardview-container"
   >
     <CardTitle title={title} />
-    <CardSubTitle
-      location={location}     
-      time={time}      
-      isOngoing={isOngoing}
-    />
+    <CardSubTitle location={location} time={time} isOngoing={isOngoing} />
     <ButtonGroup
       displayNumber={numberOfAttendedPeople}
       onJoinButtonClick={onJoinEvent}

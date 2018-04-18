@@ -1,6 +1,4 @@
-import reducer, {
-  getInitialState
-} from '../../reducers/Sample';
+import reducer, { getInitialState } from '../../reducers/Sample';
 import SampleConstants from '../../constants/SampleConstants';
 
 const {
@@ -18,7 +16,7 @@ describe('Sample reducer', () => {
   const loadingStateWithError = {
     ...initialStateWithError,
     loading: true
-  }
+  };
 
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
@@ -29,9 +27,7 @@ describe('Sample reducer', () => {
       type: SEND_SAMPLE_ACTION_REQUEST
     };
 
-    expect(
-      reducer(initialState, action)
-    ).toEqual({
+    expect(reducer(initialState, action)).toEqual({
       ...initialState,
       loading: true,
       sent: true
@@ -43,9 +39,7 @@ describe('Sample reducer', () => {
       type: SEND_SAMPLE_ACTION_SUCCESS
     };
 
-    expect(
-      reducer(loadingStateWithError, action)
-    ).toEqual({
+    expect(reducer(loadingStateWithError, action)).toEqual({
       ...initialState,
       loading: false,
       received: true,
@@ -60,9 +54,7 @@ describe('Sample reducer', () => {
       payload: anotherError
     };
 
-    expect(
-      reducer(loadingStateWithError, action)
-    ).toEqual({
+    expect(reducer(loadingStateWithError, action)).toEqual({
       ...initialState,
       loading: false,
       received: true,

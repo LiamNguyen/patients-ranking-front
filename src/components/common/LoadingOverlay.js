@@ -6,10 +6,7 @@ const textStyle = {
   fontSize: 25,
   marginTop: 30
 };
-const LoadingOverlay = ({
-  text = "Just a moment... :D",
-  loading
-}) => {
+const LoadingOverlay = ({ text = 'Just a moment... :D', loading }) => {
   let visibleStyle = {};
 
   if (loading)

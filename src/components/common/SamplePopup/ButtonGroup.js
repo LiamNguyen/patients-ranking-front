@@ -15,10 +15,7 @@ const Locale = {
   }
 };
 
-const ButtonGroup = ({
-  calendarEvent: event,
-  onDoneButtonClick
-}) => (
+const ButtonGroup = ({ calendarEvent: event, onDoneButtonClick }) => (
   <div style={buttonGroupStyle}>
     <div onClick={this.handleAddToCalendarButtonClick}>
       <AddToCalendar

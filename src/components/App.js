@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
- 	Router,
-	Route
-} from 'react-router-dom';
+import { Switch, Router, Route } from 'react-router-dom';
 import Alert from 'react-s-alert';
 
 import history from '../history';
@@ -18,28 +15,29 @@ class App extends Component {
 		// this.props.sendSampleAction();
 	}
 
-	render() {
-		return (
-			<Router history={history}>
-				<div className="app">
-					<Alert
-						stack={false}
-						position="top"
-						effect="genie"
-						timeout={5000}
-						html={true}
-						contentTemplate={CustomAlertContent}
-					/>
-					<Route exact path="/" component={SampleContainer}/>
-					<Route component={AuthedAppContainer}/>
-				</div>
-			</Router>
-		);
-	}
+  render() {
+    return (
+      <Router history={history}>
+        <div className="app">
+          <Alert
+            stack={false}
+            position="top"
+            effect="genie"
+            timeout={5000}
+            html={true}
+            contentTemplate={CustomAlertContent}
+          />
+          <Switch>
+            <Route component={AuthedAppContainer} />
+          </Switch>
+        </div>
+      </Router>
+    );
+  }
 }
 
 App.propTypes = {
-	sendSampleAction: PropTypes.func
+  sendSampleAction: PropTypes.func
 };
 
 export default App;

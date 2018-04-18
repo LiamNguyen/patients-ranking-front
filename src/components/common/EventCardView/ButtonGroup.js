@@ -29,8 +29,7 @@ const ButtonGroup = ({
   hasEventFinished,
   onInviteButtonClick
 }) => {
-  const isYourEventsScreen = !!onCancelButtonClick &&
-    !!!onJoinButtonClick;
+  const isYourEventsScreen = !!onCancelButtonClick && !!!onJoinButtonClick;
 
   const handleGoingPeopleButtonClick = () => {
     onGoingPeopleButtonClick(eventId);
@@ -41,21 +40,15 @@ const ButtonGroup = ({
   };
 
   const getMiddleButtonText = () => {
-    if (hasEventFinished)
-      return Locale.button.recreate;
-    else if (isYourEventsScreen)
-      return Locale.button.cancel
-    else
-      return Locale.button.join;
+    if (hasEventFinished) return Locale.button.recreate;
+    else if (isYourEventsScreen) return Locale.button.cancel;
+    else return Locale.button.join;
   };
 
   const getMiddleButtonHandler = () => {
-    if (hasEventFinished)
-      onRecreateEvent(eventId);
-    else if (isYourEventsScreen)
-      onCancelButtonClick(eventId)
-    else
-      onJoinButtonClick(eventId);
+    if (hasEventFinished) onRecreateEvent(eventId);
+    else if (isYourEventsScreen) onCancelButtonClick(eventId);
+    else onJoinButtonClick(eventId);
   };
 
   return (

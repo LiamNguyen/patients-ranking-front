@@ -6,9 +6,9 @@ import BackendBadRequestError from './BackendBadRequestError';
 
 function headers() {
   return new Headers({
-    'Accept': '*/*',
+    Accept: '*/*',
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${AuthInfoManager.getToken()}`
+    Authorization: `Bearer ${AuthInfoManager.getToken()}`
   });
 }
 
@@ -21,7 +21,9 @@ export function checkResponse(response) {
     if (response.status === 401) {
       AuthInfoManager.reset();
       throw new Error(
-        `Failed status ${response.status} (${response.statusText}) on request ${response.url}.`
+        `Failed status ${response.status} (${response.statusText}) on request ${
+          response.url
+        }.`
       );
     } else if (response.status === 422) {
       return response.json().then(e => {
@@ -33,7 +35,9 @@ export function checkResponse(response) {
       });
     } else {
       throw new Error(
-        `Failed status ${response.status} (${response.statusText}) on request ${response.url}.`
+        `Failed status ${response.status} (${response.statusText}) on request ${
+          response.url
+        }.`
       );
     }
   }

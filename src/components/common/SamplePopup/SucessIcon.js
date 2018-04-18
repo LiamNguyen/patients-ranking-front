@@ -13,16 +13,23 @@ const iconContainerStyle = {
   alignItems: 'center'
 };
 
-const SuccessIcon = ({
-  style,
-  innerCheckSize = 40
-}) => (
-  <div style={{
-    ...iconContainerStyle,
-    ...style
-  }}>
-    <svg xmlns="http://www.w3.org/2000/svg" width={innerCheckSize} height={innerCheckSize} viewBox="0 0 18 18">
-      <path d="M6.61 11.89L3.5 8.78 2.44 9.84 6.61 14l8.95-8.95L14.5 4z" style={{ fill: glueOrange }} />
+const SuccessIcon = ({ style, innerCheckSize = 40 }) => (
+  <div
+    style={{
+      ...iconContainerStyle,
+      ...style
+    }}
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={innerCheckSize}
+      height={innerCheckSize}
+      viewBox="0 0 18 18"
+    >
+      <path
+        d="M6.61 11.89L3.5 8.78 2.44 9.84 6.61 14l8.95-8.95L14.5 4z"
+        style={{ fill: glueOrange }}
+      />
     </svg>
   </div>
 );

@@ -13,6 +13,33 @@
   src: url('../fonts/TitilliumWeb-Light.ttf');
 }
 
+@media (max-width: 1400px) {
+	.app .signin-screen {
+		width: 40%;
+	}
+
+  .signin-screen .image-container {
+	  display: none;
+  }
+}
+
+@media (max-width: 900px) {
+	.app .signin-screen {
+		width: 100%;
+		margin-top: 50px;
+	}
+
+	.signin-screen .signin-panel .logo {
+		margin-top: 20px;
+	}
+}
+
+@media (max-width: 400px) {
+	.signin-screen .signin-panel .logo {
+		width: 250px;
+	}
+}
+
 html {
   height: 100%;
 }
@@ -20,9 +47,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
   height: 100%;
-  overflow: hidden;
 }
 
 #root {
@@ -37,6 +62,7 @@ body {
 .app {
   height: 100%;
   background-color: white;
+	padding: 0 20px 0 20px;
 }
 
 .screen-container {
@@ -52,4 +78,24 @@ body {
 .s-alert-wrapper .s-alert-box {
   position: absolute !important;
   z-index: 1500;
+}
+
+/*Overriding react-tabs-redux*/
+.app .tab-link {
+	display: inline-block;
+	font-size: 18px;
+	user-select: none;
+	padding: 10px;
+	text-align: center;
+	outline: none;
+	cursor: pointer;
+	transition: 1s ease;
+}
+
+.tab-link.tab-link-active {
+	color: #b777ae;
+}
+
+.tab-panel {
+	margin-top: 20px;
 }

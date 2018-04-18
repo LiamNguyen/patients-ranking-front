@@ -25,26 +25,26 @@ const store = createStore(initialState);
 const font = 'TitilliumWeb-Light';
 
 const muiTheme = getMuiTheme({
-	fontFamily: font,
+  fontFamily: font,
 
-	timePicker: {
-		pickerHeaderColor: Colors.black,
-		selectColor: Colors.black
-	},
-	datePicker: {
-		pickerHeaderColor: Colors.black,
-		selectColor: Colors.black,
-		}
+  timePicker: {
+    pickerHeaderColor: Colors.black,
+    selectColor: Colors.black
+  },
+  datePicker: {
+    pickerHeaderColor: Colors.black,
+    selectColor: Colors.black
+  }
 });
 
 render(
- <Provider store={store}>
-		<MuiThemeProvider muiTheme={muiTheme}>
-     <AppContainer />
-		</MuiThemeProvider>
- </Provider>,
- document.getElementById('root'),
- () => {
-   delete window.__INITIAL_STATE__;
- }
+  <Provider store={store}>
+    <MuiThemeProvider muiTheme={muiTheme}>
+      <AppContainer />
+    </MuiThemeProvider>
+  </Provider>,
+  document.getElementById('root'),
+  () => {
+    delete window.__INITIAL_STATE__;
+  }
 );

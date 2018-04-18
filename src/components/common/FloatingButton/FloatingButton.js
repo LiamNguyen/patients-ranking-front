@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, string } from 'prop-types'; 
+import { func, string } from 'prop-types';
 import SettingsIcon from 'mdi-react/SettingsIcon';
 
 import './style.css';

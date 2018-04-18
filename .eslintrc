@@ -1,0 +1,44 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "plugins": [
+    "react",
+    "prettier"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "prettier",
+    "prettier/react"
+  ],
+  "rules": {
+    "no-undef-init": 0,
+    "no-unused-vars": "off",
+    "no-console": "off",
+    "no-undef": 2,
+    "quotes": ["off", "single"],
+    "arrow-spacing": "error",
+    "react/jsx-uses-react": "error",
+    "no-constant-condition": "off",
+    "semi": "off",
+    "react/jsx-filename-extension": "off",
+    "react/prop-types": "off",
+    "global-require": "off",
+    "no-shadow": "off",
+    "react/require-default-props": "off",
+    "no-unused-expressions": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true
+      }
+    ]
+  },
+  "globals": {
+    "google": true,
+    "promise": true
+  }
+}

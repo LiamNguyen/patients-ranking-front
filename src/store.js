@@ -13,9 +13,7 @@ export default function create(initialState = {}) {
   const store = createStore(
     reducers,
     initialState,
-    composeWithDevTools(
-      applyMiddleware(...middlewares)
-    )
+    composeWithDevTools(applyMiddleware(...middlewares))
   );
   // Start sagas
   if (sagaMiddleware) {

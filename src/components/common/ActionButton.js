@@ -13,17 +13,9 @@ const actionButtonStyle = {
   cursor: 'pointer'
 };
 
-const ActionButton = ({
-  onClick,
-  imageSource,
-  style = {}
-}) => (
-  <div
-    onClick={onClick}
-    style={{ ...actionButtonStyle, ...style }}
-  >
-    {imageSource &&
-      <img src={imageSource} alt="" width="50" height="50" />}
+const ActionButton = ({ onClick, imageSource, style = {} }) => (
+  <div onClick={onClick} style={{ ...actionButtonStyle, ...style }}>
+    {imageSource && <img src={imageSource} alt="" width="50" height="50" />}
   </div>
 );
 

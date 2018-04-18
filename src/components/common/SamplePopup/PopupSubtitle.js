@@ -6,8 +6,6 @@ const textStyle = {
   fontSize: 22
 };
 
-const PopupSubTitle = ({ text }) => (
-  <p style={textStyle}>{text}</p>
-);
+const PopupSubTitle = ({ text }) => <p style={textStyle}>{text}</p>;
 
 export default PopupSubTitle;
