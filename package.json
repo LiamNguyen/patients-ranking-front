@@ -44,7 +44,7 @@
     "gulp-replace": "^0.6.1",
     "gulp-util": "^3.0.8",
     "husky": "^0.13.4",
-    "jquery": "^2.2.4",
+    "jquery": "^3.0.0",
     "lint-staged": "^3.6.1",
     "prettier": "^1.12"
   },
