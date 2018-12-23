@@ -7,13 +7,16 @@ import history from '../history';
 import SampleContainer from '../containers/SampleContainer';
 import CustomAlertContent from '../components/common/CustomAlertContent';
 import AuthedAppContainer from '../containers/AuthedAppContainer';
+import RoutePathConstants from '../constants/RoutePathConstants';
 
+const { sampleRoute } = RoutePathConstants;
 
 class App extends Component {
-	componentDidMount() {
-		// Sample action to be sent
-		// this.props.sendSampleAction();
-	}
+  componentDidMount() {
+    // Sample action to be sent
+    // this.props.sendSampleAction();
+    history.push(`/${sampleRoute}`);
+  }
 
   render() {
     return (
@@ -28,6 +31,11 @@ class App extends Component {
             contentTemplate={CustomAlertContent}
           />
           <Switch>
+            <Route
+              exact
+              path={`/${sampleRoute}`}
+              component={SampleContainer}
+            />
             <Route component={AuthedAppContainer} />
           </Switch>
         </div>

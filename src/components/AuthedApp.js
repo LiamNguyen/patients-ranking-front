@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import Alert from 'react-s-alert';
 
-import RoutePathConstants from '../constants/RoutePathConstants';
 import AuthInfoManager from '../lib/AuthInfoManager';
 
-const { home } = RoutePathConstants;
 const Locale = {
   text: {
     not_authorize: 'Not authorized'
@@ -25,13 +23,7 @@ class AuthedApp extends Component {
   render() {
     return (
       <div className="screen-container">
-        <div className="screen-content">
-          <Route
-            exact
-            path={`/${home}`}
-            render={() => <p>This is sampleRoute</p>}
-          />
-        </div>
+        <div className="screen-content"></div>
       </div>
     );
   }
