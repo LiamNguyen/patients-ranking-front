@@ -4,18 +4,17 @@ import { Switch, Router, Route } from 'react-router-dom';
 import Alert from 'react-s-alert';
 
 import history from '../history';
-import SampleContainer from '../containers/SampleContainer';
 import CustomAlertContent from '../components/common/CustomAlertContent';
-import AuthedAppContainer from '../containers/AuthedAppContainer';
 import RoutePathConstants from '../constants/RoutePathConstants';
+import PatientsRanking from './screens/PatientsRanking';
 
-const { sampleRoute } = RoutePathConstants;
+const { ranking } = RoutePathConstants;
 
 class App extends Component {
   componentDidMount() {
     // Sample action to be sent
     // this.props.sendSampleAction();
-    history.push(`/${sampleRoute}`);
+    history.push(`/${ranking}`);
   }
 
   render() {
@@ -31,12 +30,7 @@ class App extends Component {
             contentTemplate={CustomAlertContent}
           />
           <Switch>
-            <Route
-              exact
-              path={`/${sampleRoute}`}
-              component={SampleContainer}
-            />
-            <Route component={AuthedAppContainer} />
+            <Route exact path={`/${ranking}`} component={PatientsRanking} />
           </Switch>
         </div>
       </Router>

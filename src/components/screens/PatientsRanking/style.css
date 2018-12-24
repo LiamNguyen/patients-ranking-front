@@ -1,0 +1,109 @@
+.rankingScreen {
+    background-color: #1756A9;
+    height: 100%;
+}
+
+hr {
+    width: 950px;
+    height: 1px;
+    color: lightgray;
+    background-color: lightgray;
+    border: none;
+}
+
+.headerTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.nancyLogo {
+    width: 230px;
+}
+
+.headerContainer span {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.HTGSoftLogo {
+    width: 230px;
+}
+
+.currentTime {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.panelContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    height: 69%;
+}
+
+.panel-sub-container hr {
+    width: 430px;
+    height: 1px;
+    color: lightgray;
+    background-color: lightgray;
+    border: none;
+}
+
+.panel-title {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.number {
+    color: white;
+    font-size: 20px;
+    text-align: center;
+}
+
+.patientNumber {
+    color: yellow;
+    font-size: 25px;
+}
+
+.room-number {
+    font-size: 20px;
+    color: red;
+    font-weight: bold;
+    text-align: center;
+}
+
+.welcomingState {
+    font-size: 15px;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+}
+
+.patientName {
+    font-size: 25px;
+    color: yellow;
+    font-weight: bold;
+    text-align: center;
+}
+
+.patients {
+    margin-left: 40px;
+    font-size: 20px;
+    color: white;
+}
+
+.footer {
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    position: fixed;
+    width: 100%;
+    bottom: 10px;
+}

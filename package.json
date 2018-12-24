@@ -1,5 +1,5 @@
 {
-  "name": "sample-tool",
+  "name": "PatientsRanking",
   "version": "0.40.0",
   "private": true,
   "dependencies": {
@@ -61,14 +61,7 @@
     "format": "prettier --single-quote --write \"src/**/*.js\" \"*.js\""
   },
   "homepage": "./",
-  "main": "gulpfile.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/LiamNguyen/glue.git"
-  },
+  "main": "index.js",
   "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/LiamNguyen/glue/issues"
-  }
+  "license": "ISC"
 }
