@@ -7,6 +7,7 @@ import history from '../history';
 import CustomAlertContent from '../components/common/CustomAlertContent';
 import RoutePathConstants from '../constants/RoutePathConstants';
 import PatientsRanking from './screens/PatientsRanking';
+import LoadingOverlayContainer from '../containers/LoadingOverlayContainer';
 
 const { ranking } = RoutePathConstants;
 
@@ -21,6 +22,7 @@ class App extends Component {
     return (
       <Router history={history}>
         <div className="app">
+          <LoadingOverlayContainer />
           <Alert
             stack={false}
             position="top"

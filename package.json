@@ -16,7 +16,7 @@
     "moment": "^2.19.3",
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.1.2",
-    "prop-types": "^15.6.0",
+    "prop-types": "^15.6.2",
     "radium": "^0.19.6",
     "react": "^16.0.0",
     "react-add-to-calendar": "^0.1.4",

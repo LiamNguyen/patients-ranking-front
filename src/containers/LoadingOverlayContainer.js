@@ -4,15 +4,9 @@ import { connect } from 'react-redux';
 import LoadingOverlay from '../components/common/LoadingOverlay';
 
 function mapStateToProps(state) {
-  const reducers = _.pick(state, ['User', 'Event', 'Slack']);
+  const reducers = _.pick(state, ['Ranking']);
   return {
-    loading: _.some(
-      reducers,
-      reducer =>
-        !!reducer.loading ||
-        !!reducer.getUserLoading ||
-        !!reducer.getUserEventsLoading
-    )
+    loading: _.some(reducers, reducer => !!reducer.loading)
   };
 }
 

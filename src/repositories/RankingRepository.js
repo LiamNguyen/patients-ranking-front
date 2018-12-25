@@ -2,7 +2,7 @@ import routes from '../lib/ApiRoutes';
 import { checkResponse, get } from '../lib/FetchHelper';
 
 export default {
-  getSampleJson() {
-    return get(routes.sampleRoute()).then(checkResponse);
+  getRanking() {
+    return get(routes.getRanking()).then(checkResponse);
   }
 };

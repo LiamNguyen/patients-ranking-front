@@ -9,7 +9,7 @@ import './assets/stylesheets/index.css';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/genie.css';
 
-import AppContainer from './containers/AppContainer';
+import App from './components/App';
 import createStore from './store';
 import config from './config';
 import LocalStorage from './lib/LocalStorage';
@@ -40,7 +40,7 @@ const muiTheme = getMuiTheme({
 render(
   <Provider store={store}>
     <MuiThemeProvider muiTheme={muiTheme}>
-      <AppContainer />
+      <App />
     </MuiThemeProvider>
   </Provider>,
   document.getElementById('root'),

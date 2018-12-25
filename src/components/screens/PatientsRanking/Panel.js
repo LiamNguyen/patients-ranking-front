@@ -1,39 +1,45 @@
 import React from 'react';
+import { object, array } from 'prop-types';
+
 import Locale from './Locale';
 
 const {
-  text: {
-    roomNumber,
-    welcomingState,
-    patientName,
-    number,
-    patientNumber,
-    patientOne,
-    patientTwo,
-    patientThree
-  }
+  text: { welcomingState, number }
 } = Locale;
 
-const Panel = () => (
+const Panel = ({
+  inTreatment: {
+    roomNumber,
+    patient: inTreatmentPatient,
+    rank: inTreatmentRank
+  },
+  waitingList
+}) => (
   <div className="panel-sub-container">
     <div className="panel-title">
       <div>
         <p className="room-number">{roomNumber}</p>
         <p className="welcomingState">{welcomingState}</p>
-        <p className="patientName">{patientName}</p>
+        <p className="patientName">{inTreatmentPatient}</p>
       </div>
       <div>
         <p className="number">{number}</p>
-        <p className="patientNumber">{patientNumber}</p>
+        <p className="patientNumber">{inTreatmentRank}</p>
       </div>
     </div>
     <hr />
     <div className="patients">
-      <p>{`003. ${patientOne}`}</p>
-      <p>{`004. ${patientTwo}`}</p>
-      <p>{`005. ${patientThree}`}</p>
+      {waitingList.map(item => {
+        const { rank, patient } = item;
+        return <p key={rank}>{`${rank}. ${patient}`}</p>;
+      })}
     </div>
   </div>
 );
+
+Panel.propTypes = {
+  inTreatment: object.isRequired,
+  waitingList: array.isRequired
+};
 
 export default Panel;

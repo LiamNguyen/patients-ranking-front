@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import Sample from './SampleReducer';
+import Ranking from './RankingReducer';
 
 export default combineReducers({
-  Sample
+  Ranking
 });

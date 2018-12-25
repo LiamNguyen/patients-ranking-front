@@ -1,7 +1,7 @@
 import { fork, all } from 'redux-saga/effects';
 
-import { receiveSample } from './sample';
+import { getRanking } from './ranking';
 
 export default function* root() {
-  yield all([fork(receiveSample)]);
+  yield all([fork(getRanking)]);
 }
