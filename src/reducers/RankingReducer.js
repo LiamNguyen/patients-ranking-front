@@ -6,7 +6,46 @@ const { GET_RANKING } = RankingConstants;
 export const getInitialState = () => ({
   loading: false,
   error: {},
-  ranking: {}
+  ranking: {
+    inTreatment: [
+      {
+        roomNumber: '03',
+        patient: 'Nguyen Thien Phuc',
+        rank: '001'
+      },
+      {
+        roomNumber: '...',
+        patient: '...',
+        rank: '...'
+      }
+    ],
+    waitingList: [
+      {
+        rank: '003',
+        patient: 'Nguyen Thi Minh Khai'
+      },
+      {
+        rank: '004',
+        patient: 'Nam Ky Khoi Nghia'
+      },
+      {
+        rank: '005',
+        patient: 'Cach Mang Thang 8'
+      },
+      {
+        rank: '...',
+        patient: '...'
+      },
+      {
+        rank: '...',
+        patient: '...'
+      },
+      {
+        rank: '...',
+        patient: '...'
+      }
+    ]
+  }
 });
 
 export default createReducer(getInitialState, {

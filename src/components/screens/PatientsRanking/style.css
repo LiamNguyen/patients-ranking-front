@@ -1,5 +1,5 @@
-.rankingScreen {
-    background-color: #1756A9;
+.ranking-screen {
+    background-color: #1B4889;
     height: 100%;
 }
 
@@ -11,39 +11,57 @@ hr {
     border: none;
 }
 
-.headerTitle {
+.header-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: white;
 }
 
-.nancyLogo {
+.nancy-logo {
     width: 230px;
 }
 
-.headerContainer span {
+.header-container {
+    padding: 10px 20px 0 20px;
+}
+
+.header-container span {
     font-size: 40px;
     font-weight: bold;
 }
 
-.HTGSoftLogo {
+.htgsoft-logo {
     width: 230px;
 }
 
-.currentTime {
+.current-time {
     text-align: center;
-    color: red;
+    color: #d61568;
     font-weight: bold;
     font-size: 20px;
 }
 
-.panelContainer {
+.panel-container {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     width: 100%;
-    height: 69%;
+    height: 72%;
+}
+
+.panel-sub-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.left-panel-sub-container {
+    margin-right: 200px;
+}
+
+.right-panel-sub-container {
+    margin-left: 200px;
 }
 
 .panel-sub-container hr {
@@ -58,36 +76,41 @@ hr {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    text-align: center;
+    height: 140px;
 }
 
 .number {
     color: white;
-    font-size: 20px;
+    font-size: 30px;
     text-align: center;
+    font-weight: bold;
+    margin-bottom: 0;
 }
 
-.patientNumber {
-    color: yellow;
-    font-size: 25px;
+.patient-number {
+    color: #faff47;
+    font-size: 50px;
+    font-weight: bold;
 }
 
 .room-number {
     font-size: 20px;
-    color: red;
+    color: #d61568;
     font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.welcoming {
+    font-size: 20px;
+    color: white;
     text-align: center;
 }
 
-.welcomingState {
-    font-size: 15px;
-    color: black;
-    font-weight: bold;
-    text-align: center;
-}
-
-.patientName {
+.patient-name {
     font-size: 25px;
-    color: yellow;
+    color: #faff47;
     font-weight: bold;
     text-align: center;
 }
@@ -105,5 +128,11 @@ hr {
     color: white;
     position: fixed;
     width: 100%;
-    bottom: 10px;
+    bottom: 30px;
+}
+
+.vertical-separator {
+    background-color: white;
+    width: 1px;
+    height: 100%;
 }

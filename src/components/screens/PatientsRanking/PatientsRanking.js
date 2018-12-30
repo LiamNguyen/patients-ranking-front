@@ -22,17 +22,20 @@ class PatientsRanking extends Component {
     } = this.props;
 
     return (
-      <div className="rankingScreen">
+      <div className="ranking-screen">
         <Header />
         <hr />
         {inTreatment &&
           waitingList && (
-            <div className="panelContainer">
+            <div className="panel-container">
               <Panel
+                className="left-panel-sub-container"
                 inTreatment={inTreatment[0]}
                 waitingList={_.chunk(waitingList, 3)[0]}
               />
+              <div className="vertical-separator" />
               <Panel
+                className="right-panel-sub-container"
                 inTreatment={inTreatment[1]}
                 waitingList={_.chunk(waitingList, 3)[1]}
               />

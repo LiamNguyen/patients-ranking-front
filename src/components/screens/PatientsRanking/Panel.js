@@ -1,13 +1,15 @@
 import React from 'react';
 import { object, array } from 'prop-types';
 
+import './style.css';
 import Locale from './Locale';
 
 const {
-  text: { welcomingState, number }
+  text: { welcomingState, number, room }
 } = Locale;
 
 const Panel = ({
+  className,
   inTreatment: {
     roomNumber,
     patient: inTreatmentPatient,
@@ -15,16 +17,17 @@ const Panel = ({
   },
   waitingList
 }) => (
-  <div className="panel-sub-container">
+  <div className={`panel-sub-container ${className}`}>
     <div className="panel-title">
       <div>
-        <p className="room-number">{roomNumber}</p>
-        <p className="welcomingState">{welcomingState}</p>
-        <p className="patientName">{inTreatmentPatient}</p>
+        <p className="room-number">{`${room} ${roomNumber}`}</p>
+        <p className="welcoming">{welcomingState}</p>
+        <p className="patient-name">{inTreatmentPatient}</p>
       </div>
+      <div className="vertical-separator" />
       <div>
         <p className="number">{number}</p>
-        <p className="patientNumber">{inTreatmentRank}</p>
+        <p className="patient-number">{inTreatmentRank}</p>
       </div>
     </div>
     <hr />

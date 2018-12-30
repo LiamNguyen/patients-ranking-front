@@ -11,13 +11,13 @@ const {
 } = Locale;
 
 const Header = () => (
-  <div className="headerContainer">
-    <div className="headerTitle">
-      <img className="nancyLogo" src={NancyLogo} alt="" />
+  <div className="header-container">
+    <div className="header-title">
+      <img className="nancy-logo" src={NancyLogo} alt="" />
       <span>{headerTitle}</span>
-      <img className="HTGSoftLogo" src={HTGSoftLogo} alt="" />
+      <img className="htgsoft-logo" src={HTGSoftLogo} alt="" />
     </div>
-    <div className="currentTime">{moment().format('HH:mm')}</div>
+    <div className="current-time">{moment().format('HH:mm')}</div>
   </div>
 );
 

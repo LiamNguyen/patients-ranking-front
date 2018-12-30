@@ -29,7 +29,7 @@ const ButtonGroup = ({
   hasEventFinished,
   onInviteButtonClick
 }) => {
-  const isYourEventsScreen = !!onCancelButtonClick && !!!onJoinButtonClick;
+  const isYourEventsScreen = !!onCancelButtonClick && !onJoinButtonClick;
 
   const handleGoingPeopleButtonClick = () => {
     onGoingPeopleButtonClick(eventId);
