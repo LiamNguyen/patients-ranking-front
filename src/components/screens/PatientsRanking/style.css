@@ -37,9 +37,9 @@ hr {
 
 .current-time {
     text-align: center;
-    color: #d61568;
+    color: #ff1e82;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 40px;
 }
 
 .panel-container {
@@ -51,17 +51,18 @@ hr {
 }
 
 .panel-sub-container {
+    flex: 0.45;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
 .left-panel-sub-container {
-    margin-right: 200px;
+    margin-right: 100px;
 }
 
 .right-panel-sub-container {
-    margin-left: 200px;
+    margin-left: 100px;
 }
 
 .panel-sub-container hr {
@@ -78,11 +79,12 @@ hr {
     align-items: center;
     text-align: center;
     height: 140px;
+    margin-bottom: 100px;
 }
 
 .number {
     color: white;
-    font-size: 30px;
+    font-size: 50px;
     text-align: center;
     font-weight: bold;
     margin-bottom: 0;
@@ -90,34 +92,35 @@ hr {
 
 .patient-number {
     color: #faff47;
-    font-size: 50px;
+    font-size: 70px;
     font-weight: bold;
 }
 
 .room-number {
-    font-size: 20px;
-    color: #d61568;
+    font-size: 40px;
+    color: #ff1e82;
     font-weight: bold;
     text-align: center;
     margin-bottom: 10px;
 }
 
 .welcoming {
-    font-size: 20px;
+    font-size: 35px;
     color: white;
     text-align: center;
 }
 
 .patient-name {
-    font-size: 25px;
+    font-size: 45px;
     color: #faff47;
     font-weight: bold;
     text-align: center;
 }
 
 .patients {
-    margin-left: 40px;
-    font-size: 20px;
+    margin-top: 100px;
+    margin-left: 70px;
+    font-size: 40px;
     color: white;
 }
 
