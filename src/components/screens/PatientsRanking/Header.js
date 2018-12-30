@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import moment from 'moment';
 
 import './style.css';
@@ -10,15 +10,43 @@ const {
   text: { headerTitle }
 } = Locale;
 
-const Header = () => (
-  <div className="header-container">
-    <div className="header-title">
-      <img className="nancy-logo" src={NancyLogo} alt="" />
-      <span>{headerTitle}</span>
-      <img className="htgsoft-logo" src={HTGSoftLogo} alt="" />
-    </div>
-    <div className="current-time">{moment().format('HH:mm')}</div>
-  </div>
-);
+class Header extends Component {
+  constructor(props) {
+    super(props);
+      this.state = {
+        time: new moment().format('HH:mm')
+      };
+  }
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({
+        time: new moment().format('HH:mm')
+      })
+    }, 1000)
+  }
+  
+  render() {
+    return (
+      <div className = "header-container" >
+        <div className = "header-title" >
+        <img className = "nancy-logo"src = {NancyLogo} alt = "" />
+        <span > {headerTitle} </span> 
+        <img className = "htgsoft-logo"src = {HTGSoftLogo} alt = "" />
+        </div> 
+        <div className = "current-time" > {this.state.time} </div> 
+        </div>
+    );
+  }
+}
+// const Header = () => (
+//   <div className="header-container">
+//     <div className="header-title">
+//       <img className="nancy-logo" src={NancyLogo} alt="" />
+//       <span>{headerTitle}</span>
+//       <img className="htgsoft-logo" src={HTGSoftLogo} alt="" />
+//     </div>
+//     <div className="current-time">{moment().format('HH:mm')}</div>
+//   </div>
+// );
 
 export default Header;
