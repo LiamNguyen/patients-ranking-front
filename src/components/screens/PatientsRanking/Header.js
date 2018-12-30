@@ -14,13 +14,13 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      time: new moment().format('HH:mm')
+      time: moment().format('HH:mm')
     };
   }
   componentDidMount() {
     setInterval(() => {
       this.setState({
-        time: new moment().format('HH:mm')
+        time: moment().format('HH:mm')
       });
     }, 1000);
   }
