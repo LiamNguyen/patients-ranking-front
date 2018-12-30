@@ -33,7 +33,7 @@ class Header extends Component {
           <span> {headerTitle} </span>
           <img className="htgsoft-logo" src={HTGSoftLogo} alt="" />
         </div>
-        <div className="current-time"> {this.state.time} </div>
+        <div className="current-time">{this.state.time}</div>
       </div>
     );
   }
