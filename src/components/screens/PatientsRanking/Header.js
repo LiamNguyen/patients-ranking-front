@@ -24,7 +24,7 @@ class Header extends Component {
       })
     }, 1000)
   }
-  
+
   render() {
     return (
       <div className = "header-container" >
@@ -38,15 +38,5 @@ class Header extends Component {
     );
   }
 }
-// const Header = () => (
-//   <div className="header-container">
-//     <div className="header-title">
-//       <img className="nancy-logo" src={NancyLogo} alt="" />
-//       <span>{headerTitle}</span>
-//       <img className="htgsoft-logo" src={HTGSoftLogo} alt="" />
-//     </div>
-//     <div className="current-time">{moment().format('HH:mm')}</div>
-//   </div>
-// );
 
 export default Header;
