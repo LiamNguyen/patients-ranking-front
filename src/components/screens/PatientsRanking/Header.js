@@ -30,7 +30,7 @@ class Header extends Component {
       <div className="header-container">
         <div className="header-title">
           <img className="nancy-logo" src={NancyLogo} alt="" />
-          <span> {headerTitle} </span>
+          <span>{headerTitle}</span>
           <img className="htgsoft-logo" src={HTGSoftLogo} alt="" />
         </div>
         <div className="current-time">{this.state.time}</div>
