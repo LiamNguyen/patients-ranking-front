@@ -32,9 +32,9 @@ const Panel = ({
     </div>
     <hr />
     <div className="patients">
-      {waitingList.map(item => {
+      {waitingList.map((item, index) => {
         const { rank, patient } = item;
-        return <p key={rank}>{`${rank}. ${patient}`}</p>;
+        return <p key={index}>{`${rank}. ${patient}`}</p>;
       })}
     </div>
   </div>
