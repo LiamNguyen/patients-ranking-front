@@ -20,7 +20,7 @@ class Header extends Component {
   componentDidMount() {
     setInterval(() => {
       this.setState({
-        time: moment().format('HH:mm')
+        time: moment().format('HH:mm:ss')
       });
     }, 1000);
   }
