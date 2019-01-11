@@ -15,7 +15,9 @@ class App extends Component {
   componentDidMount() {
     // Sample action to be sent
     // this.props.sendSampleAction();
-    history.push(`/${ranking}`);
+    if (history.location.pathname === '/') {
+      history.push(`/${ranking}`);
+    }
   }
 
   render() {

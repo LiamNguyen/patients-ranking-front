@@ -14,7 +14,7 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      time: moment().format('HH:mm')
+      time: moment().format('HH:mm:ss')
     };
   }
   componentDidMount() {
