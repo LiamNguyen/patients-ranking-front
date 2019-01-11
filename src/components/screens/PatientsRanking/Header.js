@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import { string } from 'prop-types';
 
 import './style.css';
 import Locale from './Locale';
@@ -26,6 +27,8 @@ class Header extends Component {
   }
 
   render() {
+    const { headerTitle } = this.props;
+
     return (
       <div className="header-container">
         <div className="header-title">
@@ -38,5 +41,13 @@ class Header extends Component {
     );
   }
 }
+
+Header.propTypes = {
+  headerTitle: string
+};
+
+Header.defaultProps = {
+  headerTitle
+};
 
 export default Header;

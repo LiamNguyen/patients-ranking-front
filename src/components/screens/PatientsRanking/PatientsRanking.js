@@ -71,10 +71,11 @@ class PatientsRanking extends Component {
         waitingList
       }
     } = this.state;
+    const { query: { headerTitle, footerTitle } } = this.state;
 
     return (
       <div className="ranking-screen">
-        <Header />
+        <Header headerTitle={headerTitle} />
         <hr />
         {
           <div className="panel-container">
@@ -92,7 +93,7 @@ class PatientsRanking extends Component {
           </div>
         }
         <hr />
-        <div className="footer">{Locale.text.footerTitle}</div>
+        <div className="footer">{footerTitle || Locale.text.footerTitle}</div>
       </div>
     );
   }
