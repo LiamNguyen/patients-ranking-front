@@ -14,6 +14,9 @@ import { refreshRankingDisplay } from '../../../constants/SocketIOListenerConsta
 import config from '../../../config';
 import { changeForm } from '../../../lib/ComponentHelper';
 import { removeSpaceFromString } from '../../../lib/ConversionHelper';
+import { isDataForFirstRoom } from '../../../presenters/PatientsRankingPresenter';
+
+const MAX_WAITING_PATIENTS = 6;
 
 class PatientsRanking extends Component {
   constructor(props) {
@@ -22,8 +25,9 @@ class PatientsRanking extends Component {
     this.state = {
       query: queryString.parse(props.location.search),
       ranking: {
+        room: '',
         inTreatment: {},
-        waitingList: []
+        waitingList: { firstRoom: [], secondRoom: [] }
       }
     };
     this.socket = SocketIOClient(config.apiHost);
@@ -32,13 +36,18 @@ class PatientsRanking extends Component {
   componentDidMount() {
     this.socket.on(refreshRankingDisplay, newRanking => {
       const {
+        ranking,
         query: { firstRoom, secondRoom }
       } = this.state;
       const { room } = newRanking;
       const spaceRemovedRoom = removeSpaceFromString(room);
 
       if ([firstRoom, secondRoom].includes(spaceRemovedRoom)) {
-        this.setInTreatmentData(newRanking, spaceRemovedRoom);
+        changeForm(ranking, 'room', spaceRemovedRoom, ranking => {
+          this.setState({ ranking });
+        });
+        this.setInTreatmentData(newRanking);
+        this.setWaitingListData(newRanking);
       }
     });
   }
@@ -47,16 +56,13 @@ class PatientsRanking extends Component {
     this.socket.disconnect();
   }
 
-  setInTreatmentData(newRanking, spaceRemovedRoom) {
+  setInTreatmentData(newRanking) {
     const { room, inTreatment } = newRanking;
-    const {
-      query: { firstRoom }
-    } = this.state;
+    const { query } = this.state;
     const { ranking } = this.state;
-    const fieldToModify =
-      firstRoom === spaceRemovedRoom
-        ? 'inTreatment.firstRoom'
-        : 'inTreatment.secondRoom';
+    const fieldToModify = isDataForFirstRoom(query, room)
+      ? 'inTreatment.firstRoom'
+      : 'inTreatment.secondRoom';
 
     inTreatment['roomName'] = room;
     changeForm(ranking, fieldToModify, inTreatment, ranking => {
@@ -64,14 +70,68 @@ class PatientsRanking extends Component {
     });
   }
 
+  setWaitingListData(newRanking) {
+    const { room, waitingList } = newRanking;
+    const sortedNewWaitingList = _.sortBy(waitingList, 'rank');
+    const { query, ranking } = this.state;
+    const fieldToModify = isDataForFirstRoom(query, room)
+      ? 'waitingList.firstRoom'
+      : 'waitingList.secondRoom';
+
+    changeForm(ranking, fieldToModify, sortedNewWaitingList, ranking => {
+      this.setState({ ranking });
+    });
+  }
+
+  getDisplayWaitingList(currentRoom, theOtherRoom) {
+    if (_.isEmpty(currentRoom)) {
+      return theOtherRoom;
+    }
+    if (theOtherRoom.length > 3) {
+      const currentRoomToDisplay = _.chunk(currentRoom, 3)[0];
+      const theOtherRoomToDisplay = _.chunk(
+        theOtherRoom,
+        MAX_WAITING_PATIENTS - currentRoomToDisplay.length
+      )[0];
+
+      return _.sortBy(
+        _.concat(currentRoomToDisplay, theOtherRoomToDisplay),
+        'rank'
+      );
+    } else {
+      const currentRoomToDisplay = _.chunk(
+        currentRoom,
+        MAX_WAITING_PATIENTS - theOtherRoom.length
+      )[0];
+
+      return _.sortBy(_.concat(currentRoomToDisplay, theOtherRoom), 'rank');
+    }
+  }
+
   render() {
     const {
+      query,
+      query: { headerTitle, footerTitle },
       ranking: {
+        room,
         inTreatment: { firstRoom, secondRoom },
-        waitingList
+        waitingList: {
+          firstRoom: firstRoomWaitingList,
+          secondRoom: secondRoomWaitingList
+        }
       }
     } = this.state;
-    const { query: { headerTitle, footerTitle } } = this.state;
+    let listToDisplay = _.isEmpty(room)
+      ? []
+      : isDataForFirstRoom(query, room)
+        ? this.getDisplayWaitingList(
+            firstRoomWaitingList,
+            secondRoomWaitingList
+          )
+        : this.getDisplayWaitingList(
+            secondRoomWaitingList,
+            firstRoomWaitingList
+          );
 
     return (
       <div className="ranking-screen">
@@ -82,13 +142,13 @@ class PatientsRanking extends Component {
             <Panel
               className="left-panel-sub-container"
               inTreatment={firstRoom}
-              waitingList={_.chunk(waitingList, 3)[0]}
+              waitingList={_.chunk(listToDisplay, 3)[0]}
             />
             <div className="vertical-separator" />
             <Panel
               className="right-panel-sub-container"
               inTreatment={secondRoom}
-              waitingList={_.chunk(waitingList, 3)[1]}
+              waitingList={_.chunk(listToDisplay, 3)[1]}
             />
           </div>
         }

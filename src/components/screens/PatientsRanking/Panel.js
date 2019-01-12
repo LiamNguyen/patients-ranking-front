@@ -31,9 +31,7 @@ const Panel = ({
     <div className="patients">
       {!_.isEmpty(waitingList) &&
         waitingList.map((item, index) => {
-          const {
-            patients: { rank, patient }
-          } = item;
+          const { rank, patient } = item;
           return <p key={index}>{`${rank}. ${patient}`}</p>;
         })}
     </div>
