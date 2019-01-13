@@ -1,5 +1,5 @@
 import React from 'react';
-import { object, array, string } from 'prop-types';
+import { object, array, string, bool } from 'prop-types';
 import _ from 'lodash';
 import { TiArrowDownOutline } from 'react-icons/ti';
 
@@ -19,9 +19,14 @@ const Panel = ({
     oldRoom,
     oldRank
   },
-  waitingList
+  waitingList,
+  isOneRoomLayout
 }) => (
-  <div className={`panel-sub-container ${className}`}>
+  <div
+    className={`panel-sub-container ${
+      isOneRoomLayout ? 'one-room-layout' : ''
+    } ${className}`}
+  >
     <div className="panel-title">
       <div>
         <p className="room-name">{roomName}</p>
@@ -47,20 +52,28 @@ const Panel = ({
       </div>
     </div>
     <hr />
-    <div className="patients">
-      {!_.isEmpty(waitingList) &&
-        waitingList.map((item, index) => {
-          const { rank, patient } = item;
-          return <p key={index}>{`${rank}. ${patient}`}</p>;
-        })}
+    <div className={`patients ${isOneRoomLayout ? 'one-room-layout' : ''}`}>
+      <WaitingList list={_.chunk(waitingList, 3)[0]} />
+      <WaitingList list={_.chunk(waitingList, 3)[1]} />
     </div>
+  </div>
+);
+
+const WaitingList = ({ list }) => (
+  <div>
+    {!_.isEmpty(list) &&
+      list.map((item, index) => {
+        const { rank, patient } = item;
+        return <p key={index}>{`${rank}. ${patient}`}</p>;
+      })}
   </div>
 );
 
 Panel.propTypes = {
   inTreatment: object.isRequired,
   waitingList: array,
-  className: string
+  className: string,
+  isOneRoomLayout: bool
 };
 
 Panel.defaultProps = {

@@ -95,6 +95,11 @@ hr {
     margin-left: 100px;
 }
 
+.panel-sub-container.one-room-layout {
+    margin: 0;
+    flex: 0.6;
+}
+
 .panel-sub-container hr {
     width: 430px;
     height: 1px;
@@ -106,7 +111,7 @@ hr {
 .panel-title {
     flex: 0.5;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
     text-align: center;
     height: 140px;
@@ -150,11 +155,15 @@ hr {
 .patients {
     flex: 0.5;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     font-size: 40px;
     color: white;
+}
+
+.patients.one-room-layout {
+    flex-direction: row;
+    justify-content: space-around;
 }
 
 .footer {

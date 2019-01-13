@@ -111,7 +111,7 @@ class PatientsRanking extends Component {
   render() {
     const {
       query,
-      query: { headerTitle, footerTitle },
+      query: { headerTitle, footerTitle, secondRoom: secondRoomFromQuery },
       ranking: {
         room,
         inTreatment: { firstRoom, secondRoom },
@@ -132,26 +132,30 @@ class PatientsRanking extends Component {
             secondRoomWaitingList,
             firstRoomWaitingList
           );
+    const isOneRoomLayout = typeof secondRoomFromQuery === 'undefined';
 
     return (
       <div className="ranking-screen">
         <Header headerTitle={headerTitle} />
         <hr />
-        {
-          <div className="panel-container">
-            <Panel
-              className="left-panel-sub-container"
-              inTreatment={firstRoom}
-              waitingList={_.chunk(listToDisplay, 3)[0]}
-            />
-            <div className="vertical-separator" />
+        <div className="panel-container">
+          <Panel
+            className="left-panel-sub-container"
+            inTreatment={firstRoom}
+            waitingList={
+              isOneRoomLayout ? listToDisplay : _.chunk(listToDisplay, 3)[0]
+            }
+            isOneRoomLayout={isOneRoomLayout}
+          />
+          {!isOneRoomLayout && <div className="vertical-separator" />}
+          {!isOneRoomLayout && (
             <Panel
               className="right-panel-sub-container"
               inTreatment={secondRoom}
               waitingList={_.chunk(listToDisplay, 3)[1]}
             />
-          </div>
-        }
+          )}
+        </div>
         <hr />
         <div className="footer">{footerTitle || Locale.text.footerTitle}</div>
       </div>
