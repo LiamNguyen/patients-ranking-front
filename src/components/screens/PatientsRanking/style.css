@@ -167,13 +167,30 @@ hr {
 }
 
 .footer {
+    white-space: nowrap;
     font-size: 30px;
-    text-align: center;
     font-weight: bold;
     color: white;
     position: fixed;
     width: 100%;
     bottom: 30px;
+    overflow: hidden;
+}
+
+.footer .marquee div {
+    display: inline;
+}
+
+.footer .room-name-in-footer {
+    color: #ff1e82;
+}
+
+.footer .patient-number-in-footer {
+    color: #faff47;
+}
+
+.footer .patient-name-in-footer {
+    color: #faff47;
 }
 
 .vertical-separator {
@@ -189,4 +206,36 @@ hr {
 svg.icon {
     width: 40px;
     height: 40px;
+}
+
+.marquee {
+    /* Starting position */
+    -moz-transform:translateX(100%);
+    -webkit-transform:translateX(100%);
+    transform:translateX(100%);
+    /* Apply animation to this element */
+    -moz-animation: scroll-left 30s linear infinite;
+    -webkit-animation: scroll-left 30s linear infinite;
+    animation: scroll-left 30s linear infinite;
+}
+/* Move it (define the animation) */
+@-moz-keyframes scroll-left {
+    0%   { -moz-transform: translateX(100%); }
+    100% { -moz-transform: translateX(-100%); }
+}
+@-webkit-keyframes scroll-left {
+    0%   { -webkit-transform: translateX(100%); }
+    100% { -webkit-transform: translateX(-100%); }
+}
+@keyframes scroll-left {
+    0% {
+        -moz-transform: translateX(100%); /* Browser bug fix */
+        -webkit-transform: translateX(100%); /* Browser bug fix */
+        transform: translateX(100%);
+    }
+    100% {
+        -moz-transform: translateX(-100%); /* Browser bug fix */
+        -webkit-transform: translateX(-100%); /* Browser bug fix */
+        transform: translateX(-100%);
+    }
 }

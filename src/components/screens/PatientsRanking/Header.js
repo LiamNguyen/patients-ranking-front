@@ -8,7 +8,7 @@ import NancyLogo from '../../../assets/images/logo_nancy.png';
 import HTGSoftLogo from '../../../assets/images/logo_HTGSoft.png';
 
 const {
-  text: { headerTitle }
+  text: { headerTitleDefault }
 } = Locale;
 
 class Header extends Component {
@@ -47,7 +47,7 @@ Header.propTypes = {
 };
 
 Header.defaultProps = {
-  headerTitle
+  headerTitle: headerTitleDefault
 };
 
 export default Header;

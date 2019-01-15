@@ -6,15 +6,18 @@ import SocketIOClient from 'socket.io-client';
 import queryString from 'query-string';
 
 import './style.css';
-import Locale from './Locale';
 import Header from './Header';
+import Footer from './Footer';
 import Panel from './Panel';
 import RankingActions from '../../../actions/RankingActions';
 import { refreshRankingDisplay } from '../../../constants/SocketIOListenerConstants';
 import config from '../../../config';
 import { changeForm } from '../../../lib/ComponentHelper';
 import { removeSpaceFromString } from '../../../lib/ConversionHelper';
-import { isDataForFirstRoom } from '../../../presenters/PatientsRankingPresenter';
+import {
+  isDataForFirstRoom,
+  isOneRoomLayout
+} from '../../../presenters/PatientsRankingPresenter';
 
 const MAX_WAITING_PATIENTS = 6;
 
@@ -27,6 +30,7 @@ class PatientsRanking extends Component {
       ranking: {
         room: '',
         inTreatment: {},
+        missedTurn: { firstRoom: [], secondRoom: [] },
         waitingList: { firstRoom: [], secondRoom: [] }
       }
     };
@@ -34,27 +38,45 @@ class PatientsRanking extends Component {
   }
 
   componentDidMount() {
-    this.socket.on(refreshRankingDisplay, newRanking => {
-      const {
-        ranking,
-        query: { firstRoom, secondRoom }
-      } = this.state;
-      const { room } = newRanking;
-      const spaceRemovedRoom = removeSpaceFromString(room);
-
-      if ([firstRoom, secondRoom].includes(spaceRemovedRoom)) {
-        changeForm(ranking, 'room', spaceRemovedRoom, ranking => {
-          this.setState({ ranking });
-        });
-        this.setInTreatmentData(newRanking);
-        this.setWaitingListData(newRanking);
-      }
-    });
+    this.handleRefreshRankingDisplay();
   }
 
   componentWillUnmount() {
     this.socket.disconnect();
   }
+
+  handleRefreshRankingDisplay = () => {
+    this.socket.on(refreshRankingDisplay, newRanking => {
+      const {
+        ranking,
+        query: { firstRoom, secondRoom },
+        query
+      } = this.state;
+      const { room, missedTurn } = newRanking;
+      const spaceRemovedRoom = removeSpaceFromString(room);
+
+      if ([firstRoom, secondRoom].includes(spaceRemovedRoom)) {
+        let roomChangedRanking = {};
+
+        changeForm(ranking, 'room', spaceRemovedRoom, ranking => {
+          roomChangedRanking = ranking;
+          this.setState({ ranking });
+        });
+        changeForm(
+          roomChangedRanking,
+          `missedTurn.${
+            isDataForFirstRoom(query, room) ? 'firstRoom' : 'secondRoom'
+          }`,
+          missedTurn || [],
+          ranking => {
+            this.setState({ ranking });
+          }
+        );
+        this.setInTreatmentData(newRanking);
+        this.setWaitingListData(newRanking);
+      }
+    });
+  };
 
   setInTreatmentData(newRanking) {
     const { room, inTreatment } = newRanking;
@@ -84,9 +106,13 @@ class PatientsRanking extends Component {
   }
 
   getDisplayWaitingList(currentRoom, theOtherRoom) {
-    if (_.isEmpty(currentRoom)) {
-      return theOtherRoom;
-    }
+    const {
+      query: { secondRoom }
+    } = this.state;
+
+    if (isOneRoomLayout(secondRoom)) return currentRoom;
+    if (_.isEmpty(currentRoom)) return theOtherRoom;
+
     if (theOtherRoom.length > 3) {
       const currentRoomToDisplay = _.chunk(currentRoom, 3)[0];
       const theOtherRoomToDisplay = _.chunk(
@@ -118,6 +144,10 @@ class PatientsRanking extends Component {
         waitingList: {
           firstRoom: firstRoomWaitingList,
           secondRoom: secondRoomWaitingList
+        },
+        missedTurn: {
+          firstRoom: firstMissedTurnRoom,
+          secondRoom: secondMissedTurnRoom
         }
       }
     } = this.state;
@@ -132,7 +162,6 @@ class PatientsRanking extends Component {
             secondRoomWaitingList,
             firstRoomWaitingList
           );
-    const isOneRoomLayout = typeof secondRoomFromQuery === 'undefined';
 
     return (
       <div className="ranking-screen">
@@ -143,12 +172,16 @@ class PatientsRanking extends Component {
             className="left-panel-sub-container"
             inTreatment={firstRoom}
             waitingList={
-              isOneRoomLayout ? listToDisplay : _.chunk(listToDisplay, 3)[0]
+              isOneRoomLayout(secondRoomFromQuery)
+                ? listToDisplay
+                : _.chunk(listToDisplay, 3)[0]
             }
-            isOneRoomLayout={isOneRoomLayout}
+            isOneRoomLayout={isOneRoomLayout(secondRoomFromQuery)}
           />
-          {!isOneRoomLayout && <div className="vertical-separator" />}
-          {!isOneRoomLayout && (
+          {!isOneRoomLayout(secondRoomFromQuery) && (
+            <div className="vertical-separator" />
+          )}
+          {!isOneRoomLayout(secondRoomFromQuery) && (
             <Panel
               className="right-panel-sub-container"
               inTreatment={secondRoom}
@@ -157,7 +190,13 @@ class PatientsRanking extends Component {
           )}
         </div>
         <hr />
-        <div className="footer">{footerTitle || Locale.text.footerTitle}</div>
+        <Footer
+          footerTitle={footerTitle}
+          firstRoom={firstRoom}
+          firstMissedTurnRoom={firstMissedTurnRoom}
+          secondRoom={secondRoom}
+          secondMissedTurnRoom={secondMissedTurnRoom}
+        />
       </div>
     );
   }

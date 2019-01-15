@@ -5,3 +5,7 @@ export function isDataForFirstRoom(query, room) {
 
   return firstRoom === removeSpaceFromString(room);
 }
+
+export function isOneRoomLayout(secondRoomFromQuery) {
+  return typeof secondRoomFromQuery === 'undefined';
+}

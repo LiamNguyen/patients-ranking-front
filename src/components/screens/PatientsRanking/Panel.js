@@ -10,6 +10,16 @@ const {
   text: { welcomingState, number }
 } = Locale;
 
+const WaitingList = ({ list }) => (
+  <div>
+    {!_.isEmpty(list) &&
+      list.map((item, index) => {
+        const { rank, patient } = item;
+        return <p key={index}>{`${rank}. ${patient}`}</p>;
+      })}
+  </div>
+);
+
 const Panel = ({
   className,
   inTreatment: {
@@ -59,16 +69,6 @@ const Panel = ({
   </div>
 );
 
-const WaitingList = ({ list }) => (
-  <div>
-    {!_.isEmpty(list) &&
-      list.map((item, index) => {
-        const { rank, patient } = item;
-        return <p key={index}>{`${rank}. ${patient}`}</p>;
-      })}
-  </div>
-);
-
 Panel.propTypes = {
   inTreatment: object.isRequired,
   waitingList: array,
@@ -84,6 +84,10 @@ Panel.defaultProps = {
   },
   waitingList: [],
   className: ''
+};
+
+WaitingList.propTypes = {
+  list: array
 };
 
 export default Panel;
