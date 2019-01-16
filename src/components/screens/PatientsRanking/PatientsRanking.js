@@ -154,15 +154,14 @@ class PatientsRanking extends Component {
   retrieveRankingStateFromStoreIfNeeded() {
     const rankingFromStore = LocalStorage.get(STORAGE_KEY);
 
-    if (moment(rankingFromStore.validity).isAfter(moment().format(DATE_FORMAT))) {
+    if (rankingFromStore === null) return;
+    if (
+      moment(rankingFromStore.validity).isAfter(moment().format(DATE_FORMAT))
+    ) {
       LocalStorage.remove(STORAGE_KEY);
       return;
     }
-
-    if (
-      rankingFromStore !== null &&
-      _.isEqual(this.state.ranking, INITIAL_RANKING_STATE)
-    ) {
+    if (_.isEqual(this.state.ranking, INITIAL_RANKING_STATE)) {
       delete rankingFromStore[VALIDITY_KEY];
       this.setState({ ranking: rankingFromStore });
     }

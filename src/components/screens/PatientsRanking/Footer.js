@@ -5,7 +5,7 @@ import { string, array, object } from 'prop-types';
 import Locale from './Locale';
 
 const {
-  text: { footerTitleDefault, call }
+  text: { footerTitleDefault, footerTitleMissedTurn, call }
 } = Locale;
 
 const FooterItem = ({ room, missedTurnRoom }) =>
@@ -31,7 +31,11 @@ const Footer = ({
 }) => (
   <div className="footer">
     <div className="marquee">
-      <span>{footerTitle}</span>
+      <span>
+        {!_.isEmpty(firstMissedTurnRoom) || !_.isEmpty(secondMissedTurnRoom)
+          ? footerTitleMissedTurn
+          : footerTitle}
+      </span>
       <FooterItem room={firstRoom} missedTurnRoom={firstMissedTurnRoom} />
       <FooterItem room={secondRoom} missedTurnRoom={secondMissedTurnRoom} />
     </div>
