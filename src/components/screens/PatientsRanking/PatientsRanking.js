@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import SocketIOClient from 'socket.io-client';
 import queryString from 'query-string';
+import moment from 'moment';
 
 import './style.css';
 import Header from './Header';
@@ -18,8 +19,18 @@ import {
   isDataForFirstRoom,
   isOneRoomLayout
 } from '../../../presenters/PatientsRankingPresenter';
+import LocalStorage from '../../../lib/LocalStorage';
 
 const MAX_WAITING_PATIENTS = 6;
+const STORAGE_KEY = 'ranking';
+const VALIDITY_KEY = 'validity';
+const DATE_FORMAT = 'YYYY-MM-DD';
+const INITIAL_RANKING_STATE = {
+  room: '',
+  inTreatment: {},
+  missedTurn: { firstRoom: [], secondRoom: [] },
+  waitingList: { firstRoom: [], secondRoom: [] }
+};
 
 class PatientsRanking extends Component {
   constructor(props) {
@@ -27,18 +38,14 @@ class PatientsRanking extends Component {
 
     this.state = {
       query: queryString.parse(props.location.search),
-      ranking: {
-        room: '',
-        inTreatment: {},
-        missedTurn: { firstRoom: [], secondRoom: [] },
-        waitingList: { firstRoom: [], secondRoom: [] }
-      }
+      ranking: INITIAL_RANKING_STATE
     };
     this.socket = SocketIOClient(config.apiHost);
   }
 
   componentDidMount() {
     this.handleRefreshRankingDisplay();
+    this.retrieveRankingStateFromStoreIfNeeded();
   }
 
   componentWillUnmount() {
@@ -75,6 +82,7 @@ class PatientsRanking extends Component {
         this.setInTreatmentData(newRanking);
         this.setWaitingListData(newRanking);
       }
+      this.storeCurrentRankingState();
     });
   };
 
@@ -131,6 +139,32 @@ class PatientsRanking extends Component {
       )[0];
 
       return _.sortBy(_.concat(currentRoomToDisplay, theOtherRoom), 'rank');
+    }
+  }
+
+  storeCurrentRankingState() {
+    setTimeout(() => {
+      const rankingToBeStored = { ...this.state.ranking };
+      rankingToBeStored[VALIDITY_KEY] = moment().format(DATE_FORMAT);
+      LocalStorage.set(STORAGE_KEY, rankingToBeStored);
+      console.log(JSON.stringify(this.state.ranking));
+    }, 1000);
+  }
+
+  retrieveRankingStateFromStoreIfNeeded() {
+    const rankingFromStore = LocalStorage.get(STORAGE_KEY);
+
+    if (moment(rankingFromStore.validity).isAfter(moment().format(DATE_FORMAT))) {
+      LocalStorage.remove(STORAGE_KEY);
+      return;
+    }
+
+    if (
+      rankingFromStore !== null &&
+      _.isEqual(this.state.ranking, INITIAL_RANKING_STATE)
+    ) {
+      delete rankingFromStore[VALIDITY_KEY];
+      this.setState({ ranking: rankingFromStore });
     }
   }
 
