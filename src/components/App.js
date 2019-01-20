@@ -6,7 +6,6 @@ import Alert from 'react-s-alert';
 import history from '../history';
 import CustomAlertContent from '../components/common/CustomAlertContent';
 import RoutePathConstants from '../constants/RoutePathConstants';
-import PatientsRanking from './screens/PatientsRanking';
 import LoadingOverlayContainer from '../containers/LoadingOverlayContainer';
 
 const { ranking } = RoutePathConstants;
@@ -33,9 +32,6 @@ class App extends Component {
             html={true}
             contentTemplate={CustomAlertContent}
           />
-          <Switch>
-            <Route exact path={`/${ranking}`} component={PatientsRanking} />
-          </Switch>
         </div>
       </Router>
     );

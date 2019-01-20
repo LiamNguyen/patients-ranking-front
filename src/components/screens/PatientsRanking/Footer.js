@@ -15,8 +15,7 @@ const FooterItem = ({ room, missedTurnRoom }) =>
           &nbsp;&nbsp;-&nbsp;&nbsp;
           <span className="room-name-in-footer">{room.roomName}</span>
           &nbsp;{call}&nbsp;
-          <span className="patient-number-in-footer">{item.rank}</span>
-          .
+          <span className="patient-number-in-footer">{item.rank}</span>.
           <span className="patient-name-in-footer">{item.patient}</span>
         </div>
       ))

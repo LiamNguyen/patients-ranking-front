@@ -1,22 +1,51 @@
 'user strict';
-var gulp = require('gulp');
-var bump = require('gulp-bump');
-var replace = require('gulp-replace');
-var rename = require('gulp-rename');
-var _ = require('lodash');
-var git = require('git-rev');
-var fs = require('fs');
-var semver = require('semver');
-var merge = require('merge-stream');
+let gulp = require('gulp');
+let bump = require('gulp-bump');
+let replace = require('gulp-replace');
+let _ = require('lodash');
+let git = require('git-rev');
+let fs = require('fs');
+let semver = require('semver');
+let merge = require('merge-stream');
+let webpack = require('webpack');
+let gutil = require('gulp-util');
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
+let WebpackDevServer = require('webpack-dev-server');
 
-// Build browser bundle for deployment
-gulp.task('build', ['git:version', 'copy:version', 'build:browser']);
+let webpackConfig = require('./webpack.config');
 
-// Put environment to index.html when building bundle
-// for browser with yarn
-gulp.task('build:browser', function() {
+let webpackProductionConfig = Object.create(webpackConfig);
+webpackProductionConfig.debug = false;
+webpackProductionConfig.devtool = 'source-map';
+webpackProductionConfig.plugins = [
+  new webpack.DefinePlugin({
+    'process.env': { NODE_ENV: JSON.stringify('production') }
+  }),
+  new webpack.optimize.DedupePlugin(),
+  new webpack.optimize.UglifyJsPlugin(),
+  new ExtractTextPlugin('[name].css')
+];
+webpackProductionConfig.entry = {
+  app: './src/index.js'
+};
+
+gulp.task('default', ['webpack-dev-server']);
+gulp.task('build', ['webpack:build:production', 'build:production']);
+
+gulp.task('webpack:build:production', function(callback) {
+  webpack(webpackProductionConfig, function(err, stats) {
+    if (err) {
+      throw new gutil.PluginError('webpack:build', err);
+    }
+    gutil.log('[webpack:build]', stats.toString({ colors: true }));
+    callback();
+  });
+  gulp.src(['src/assets/images/**/*']).pipe(gulp.dest('dist/assets/images'));
+});
+
+gulp.task('build:production', function() {
   gulp
-    .src(['./build/index.html'])
+    .src(['./index.html'])
     .pipe(
       printEnv({
         ENV: 'production',
@@ -24,7 +53,30 @@ gulp.task('build:browser', function() {
         APP_HOST: 'http://113.161.40.128:3001'
       })
     )
-    .pipe(gulp.dest('./build'));
+    .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('webpack-dev-server', function() {
+  new WebpackDevServer(webpack(webpackConfig), {
+    publicPath: webpackConfig.output.publicPath,
+    stats: { colors: true },
+    hot: true,
+    watch: true,
+    lazy: false,
+    historyApiFallback: true,
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: 1000
+    }
+  }).listen(3000, '0.0.0.0', function(err) {
+    if (err) {
+      throw new gutil.PluginError('webpack-dev-server', err);
+    }
+    gutil.log(
+      '[webpack-dev-server]',
+      'http://localhost:3000/webpack-dev-server/'
+    );
+  });
 });
 
 // Log version with git commit hash everytime bundle is built

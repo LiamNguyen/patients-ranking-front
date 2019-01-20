@@ -9,11 +9,12 @@ import './assets/stylesheets/index.css';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/genie.css';
 
-import App from './components/App';
 import createStore from './store';
 import config from './config';
 import LocalStorage from './lib/LocalStorage';
 import SessionStorage from './lib/SessionStorage';
+import { Router, hashHistory } from 'react-router';
+import routes from '../routes';
 
 config.init(window);
 LocalStorage.init(window);
@@ -40,7 +41,7 @@ const muiTheme = getMuiTheme({
 render(
   <Provider store={store}>
     <MuiThemeProvider muiTheme={muiTheme}>
-      <App />
+      <Router history={hashHistory}>{routes}</Router>
     </MuiThemeProvider>
   </Provider>,
   document.getElementById('root'),

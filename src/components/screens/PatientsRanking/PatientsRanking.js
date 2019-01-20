@@ -187,14 +187,8 @@ class PatientsRanking extends Component {
     let listToDisplay = _.isEmpty(room)
       ? []
       : isDataForFirstRoom(query, room)
-        ? this.getDisplayWaitingList(
-            firstRoomWaitingList,
-            secondRoomWaitingList
-          )
-        : this.getDisplayWaitingList(
-            secondRoomWaitingList,
-            firstRoomWaitingList
-          );
+      ? this.getDisplayWaitingList(firstRoomWaitingList, secondRoomWaitingList)
+      : this.getDisplayWaitingList(secondRoomWaitingList, firstRoomWaitingList);
 
     return (
       <div className="ranking-screen">

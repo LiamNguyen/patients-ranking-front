@@ -23,6 +23,7 @@ logs
 
 # production
 /build
+/dist
 
 # mobile production
 /mobile
