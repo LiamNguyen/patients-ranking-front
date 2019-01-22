@@ -4,7 +4,7 @@ let appHost = '';
 
 export default {
   init(global) {
-    env = global.ENV || 'production';
+    env = global.ENV || 'development';
     apiHost = global.API_HOST || 'http://localhost:5000';
     appHost = global.APP_HOST || 'https://';
   },

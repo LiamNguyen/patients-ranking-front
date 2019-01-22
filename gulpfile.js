@@ -1,12 +1,7 @@
 'user strict';
 let gulp = require('gulp');
-let bump = require('gulp-bump');
 let replace = require('gulp-replace');
 let _ = require('lodash');
-let git = require('git-rev');
-let fs = require('fs');
-let semver = require('semver');
-let merge = require('merge-stream');
 let webpack = require('webpack');
 let gutil = require('gulp-util');
 let ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -26,7 +21,7 @@ webpackProductionConfig.plugins = [
   new ExtractTextPlugin('[name].css')
 ];
 webpackProductionConfig.entry = {
-  app: './src/index.js'
+  app: './src/scripts/main.js'
 };
 
 gulp.task('default', ['webpack-dev-server']);
@@ -79,27 +74,6 @@ gulp.task('webpack-dev-server', function() {
   });
 });
 
-// Log version with git commit hash everytime bundle is built
-gulp.task('git:version', function() {
-  let fileContent = '';
-  git.long(function(version) {
-    fileContent += ['Git commit hash:', version].join(' ');
-    fileContent += '\r\n';
-    git.tag(function(tag) {
-      fileContent += ['Git tag:', tag].join(' ');
-      fs.writeFileSync('version.txt', fileContent);
-    });
-  });
-});
-
-gulp.task('bump:minor', function() {
-  return bumpVersion('minor');
-});
-
-gulp.task('copy:version', function() {
-  gulp.src(['./version.txt']).pipe(gulp.dest('./build'));
-});
-
 // Helpers
 function printEnv(env) {
   var str = '';
@@ -109,35 +83,4 @@ function printEnv(env) {
     }
   });
   return replace(/__ENV__/g, str);
-}
-
-function bumpVersion(type) {
-  var pkg = getPackageJson();
-  var newVer = semver.inc(pkg.version, type);
-
-  var packageJson = gulp
-    .src(['./package.json'])
-    .pipe(
-      bump({
-        version: newVer
-      })
-    )
-    .pipe(gulp.dest('./'));
-
-  var replaceVersionCode = function(match) {
-    var number = match.match(/\d+/);
-    return '" versionCode="' + (parseInt(number[0]) + 1) + '"';
-  };
-
-  var configXml = gulp
-    .src(['./mobile/config.xml'])
-    .pipe(replace(/"\s+version=".*?"/gim, '" version="' + newVer + '"'))
-    .pipe(replace(/"\s+versionCode=".*?"/gim, replaceVersionCode))
-    .pipe(gulp.dest('./mobile/'));
-
-  return merge(packageJson, configXml);
-}
-
-function getPackageJson() {
-  return JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 }

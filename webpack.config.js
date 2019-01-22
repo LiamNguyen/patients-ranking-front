@@ -8,9 +8,9 @@ module.exports = {
 
   entry: {
     app: [
-      'webpack-dev-server/client?http://localhost:3000',
+      'webpack-dev-server/client?http://localhost:8081',
       'webpack/hot/only-dev-server',
-      './src/index.js'
+      './src/scripts/main.js'
     ]
   },
 
@@ -32,7 +32,7 @@ module.exports = {
   ],
 
   resolve: {
-    modulesDirectories: ['src', 'node_modules', 'bower_components']
+    modulesDirectories: ['src/scripts', 'node_modules', 'bower_components']
   },
 
   externals: {

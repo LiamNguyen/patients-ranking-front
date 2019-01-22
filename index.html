@@ -1,36 +1,66 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
-    <link href="assets/app.css" rel="stylesheet">
-    <title>Patients ranking</title>
-  </head>
-  <body>
-    <noscript>
-      <br/><br/>
-      <div class="row">
-        <div class="col-sm-8 col-sm-offset-2">
-          <div class="panel panel-default">
-            <div class="panel-body text-center">
-              JavaScript ei ole käytössä tai sitä ei tueta käyttämässäsi selaimessa.
-              <br/>
-              Tuetut selaimet ovat IE 9 ja uudempi, Chrome, Firefox ja Safari.
-              <hr/>
-              JavaScript is disabled or not supported by your browser.
-              <br/>
-              Supported browsers include IE 9 or later, Chrome, Firefox and Safari.
-              <hr/>
-            </div>
+<html>
+<head>
+  <!-- GTM_HEAD -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Patients ranking</title>
+  <link href="assets/app.css" rel="stylesheet">
+
+  <!--[if lt IE 10]>
+    <script type="text/javascript" src="/assets/ie.js"></script>
+    <link href="/assets/ie.css" rel="stylesheet">
+  <![endif]-->
+</head>
+<body>
+  <!-- GTM_BODY -->
+  <div id="root"></div>
+  <!--[if lt IE 10]>
+    <br/><br/>
+    <div class="non-support-overlay">
+      <div class="col-sm-8 col-sm-offset-2">
+        <div class="panel panel-default">
+          <div class="panel-body text-center">
+            Käyttämäsi selain on vanhentunut. Ole hyvä ja päivitä uuteen versioon.
+            <br/>
+            Tuetut selaimet ovat IE 10 ja uudempi, Chrome, Firefox ja Safari.
+            <hr/>
+            Your browser is out of date. Please update it.
+            <br/>
+            Supported browsers include IE 10 or later, Chrome, Firefox and Safari.
+            <hr/>
+            <a href="http://www.edenred.fi"><b>www.edenred.fi</b></a>
           </div>
         </div>
       </div>
-    </noscript>
-    <div id="root"></div>
-    <script src="/assets/app.js"></script>
-    <script>
-      __ENV__
-    </script>
-  </body>
+    </div>
+  <![endif]-->
+  <noscript>
+    <br/><br/>
+    <div class="row">
+      <div class="col-sm-8 col-sm-offset-2">
+        <div class="panel panel-default">
+          <div class="panel-body text-center">
+            JavaScript ei ole käytössä tai sitä ei tueta käyttämässäsi selaimessa.
+            <br/>
+            Tuetut selaimet ovat IE 10 ja uudempi, Chrome, Firefox ja Safari.
+            <hr/>
+            JavaScript is disabled or not supported by your browser.
+            <br/>
+            Supported browsers include IE 10 or later, Chrome, Firefox and Safari.
+            <hr/>
+            <a href="http://www.edenred.fi" target="_blank"><b>www.edenred.fi</b></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </noscript>
+  <script>
+    __ENV__
+  </script>
+
+  <script type="text/javascript" src="assets/app.js"></script>
+</body>
 </html>
