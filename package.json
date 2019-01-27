@@ -23,6 +23,7 @@
     "object-assign": "^2.0.0",
     "placeholders.js": "^3.0.2",
     "prop-types": "^15.5.7",
+    "query-string": "^6.2.0",
     "radium": "^0.23.0",
     "react": "^15.0.1",
     "react-addons-css-transition-group": "^15.0.0",

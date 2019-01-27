@@ -38,7 +38,7 @@ const Panel = ({
     } ${className}`}
   >
     <div className="panel-title">
-      <div>
+      <div className="section left">
         <p className="room-name">{roomName}</p>
         {oldRoom && (
           <div>
@@ -49,14 +49,13 @@ const Panel = ({
         <p className="welcoming">{welcomingState}</p>
         <p className="patient-name">{inTreatmentPatient}</p>
       </div>
-      <div className="vertical-separator half-height" />
-      <div>
+      <div className="section right">
         <p className="number">{number}</p>
         <p className="patient-number">{inTreatmentRank}</p>
         {oldRank && (
           <div>
             <TiArrowDownOutline className="icon" fill="#faff47" />
-            <p className="patient-number">{oldRank}</p>
+            <p className="patient-number change-room">{oldRank}</p>
           </div>
         )}
       </div>

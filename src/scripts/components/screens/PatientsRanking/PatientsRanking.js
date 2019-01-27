@@ -9,17 +9,17 @@ import moment from 'moment';
 import './style.css';
 import Header from './Header';
 import Footer from './Footer';
-import Panel from './Panel';
 import RankingActions from '../../../actions/RankingActions';
 import { refreshRankingDisplay } from '../../../constants/SocketIOListenerConstants';
 import config from '../../../config';
-import { changeForm } from '../../../lib/ComponentHelper';
 import { removeSpaceFromString } from '../../../lib/ConversionHelper';
 import {
   isDataForFirstRoom,
   isOneRoomLayout
 } from '../../../presenters/PatientsRankingPresenter';
 import LocalStorage from '../../../lib/LocalStorage';
+import PatientsNameAndRank from './PatientsNameAndRank';
+import WaitingList from './WaitingList';
 
 const MAX_WAITING_PATIENTS = 6;
 const STORAGE_KEY = 'ranking';
@@ -38,7 +38,7 @@ class PatientsRanking extends Component {
 
     this.state = {
       query: queryString.parse(props.location.search),
-      ranking: INITIAL_RANKING_STATE
+      ...INITIAL_RANKING_STATE
     };
     this.socket = SocketIOClient(config.apiHost);
   }
@@ -55,30 +55,26 @@ class PatientsRanking extends Component {
   handleRefreshRankingDisplay = () => {
     this.socket.on(refreshRankingDisplay, newRanking => {
       const {
-        ranking,
         query: { firstRoom, secondRoom },
-        query
+        query,
+        missedTurn
       } = this.state;
-      const { room, missedTurn } = newRanking;
+      const { room, missedTurn: newMissedTurn } = newRanking;
       const spaceRemovedRoom = removeSpaceFromString(room);
 
       if ([firstRoom, secondRoom].includes(spaceRemovedRoom)) {
-        let roomChangedRanking = {};
+        const storingMissedTurn = _.cloneDeep(missedTurn);
 
-        changeForm(ranking, 'room', spaceRemovedRoom, ranking => {
-          roomChangedRanking = ranking;
-          this.setState({ ranking });
-        });
-        changeForm(
-          roomChangedRanking,
-          `missedTurn.${
-            isDataForFirstRoom(query, room) ? 'firstRoom' : 'secondRoom'
-          }`,
-          missedTurn || [],
-          ranking => {
-            this.setState({ ranking });
-          }
+        _.set(
+          storingMissedTurn,
+          isDataForFirstRoom(query, room) ? 'firstRoom' : 'secondRoom',
+          newMissedTurn || []
         );
+        this.setState({
+          room: spaceRemovedRoom,
+          missedTurn: storingMissedTurn
+        });
+
         this.setInTreatmentData(newRanking);
         this.setWaitingListData(newRanking);
       }
@@ -87,30 +83,33 @@ class PatientsRanking extends Component {
   };
 
   setInTreatmentData(newRanking) {
-    const { room, inTreatment } = newRanking;
-    const { query } = this.state;
-    const { ranking } = this.state;
-    const fieldToModify = isDataForFirstRoom(query, room)
-      ? 'inTreatment.firstRoom'
-      : 'inTreatment.secondRoom';
+    const { room, inTreatment: newInTreatment } = newRanking;
+    const { query, inTreatment } = this.state;
+    const storingInTreatment = _.cloneDeep(inTreatment);
 
-    inTreatment['roomName'] = room;
-    changeForm(ranking, fieldToModify, inTreatment, ranking => {
-      this.setState({ ranking });
-    });
+    newInTreatment['roomName'] = room;
+    _.set(
+      storingInTreatment,
+      isDataForFirstRoom(query, room) ? 'firstRoom' : 'secondRoom',
+      newInTreatment
+    );
+
+    this.setState({ inTreatment: storingInTreatment });
   }
 
   setWaitingListData(newRanking) {
-    const { room, waitingList } = newRanking;
-    const sortedNewWaitingList = _.sortBy(waitingList, 'rank');
-    const { query, ranking } = this.state;
-    const fieldToModify = isDataForFirstRoom(query, room)
-      ? 'waitingList.firstRoom'
-      : 'waitingList.secondRoom';
+    const { room, waitingList: newWaitingList } = newRanking;
+    const sortedNewWaitingList = _.sortBy(newWaitingList, 'rank');
+    const { query, waitingList } = this.state;
+    const storingWaitingList = _.cloneDeep(waitingList);
 
-    changeForm(ranking, fieldToModify, sortedNewWaitingList, ranking => {
-      this.setState({ ranking });
-    });
+    _.set(
+      storingWaitingList,
+      isDataForFirstRoom(query, room) ? 'firstRoom' : 'secondRoom',
+      sortedNewWaitingList
+    );
+
+    this.setState({ waitingList: { ...storingWaitingList } });
   }
 
   getDisplayWaitingList(currentRoom, theOtherRoom) {
@@ -144,15 +143,19 @@ class PatientsRanking extends Component {
 
   storeCurrentRankingState() {
     setTimeout(() => {
-      const rankingToBeStored = { ...this.state.ranking };
+      const rankingToBeStored = { ...this.state };
+
+      delete rankingToBeStored['query'];
       rankingToBeStored[VALIDITY_KEY] = moment().format(DATE_FORMAT);
       LocalStorage.set(STORAGE_KEY, rankingToBeStored);
-      console.log(JSON.stringify(this.state.ranking));
     }, 1000);
   }
 
   retrieveRankingStateFromStoreIfNeeded() {
     const rankingFromStore = LocalStorage.get(STORAGE_KEY);
+    const currentRankingState = { ...this.state };
+
+    delete currentRankingState['query'];
 
     if (rankingFromStore === null) return;
     if (
@@ -161,9 +164,9 @@ class PatientsRanking extends Component {
       LocalStorage.remove(STORAGE_KEY);
       return;
     }
-    if (_.isEqual(this.state.ranking, INITIAL_RANKING_STATE)) {
-      delete rankingFromStore[VALIDITY_KEY];
-      this.setState({ ranking: rankingFromStore });
+    if (_.isEqual(currentRankingState, INITIAL_RANKING_STATE)) {
+      const { inTreatment, missedTurn, room, waitingList } = rankingFromStore;
+      this.setState({ inTreatment, missedTurn, room, waitingList });
     }
   }
 
@@ -171,17 +174,15 @@ class PatientsRanking extends Component {
     const {
       query,
       query: { headerTitle, footerTitle, secondRoom: secondRoomFromQuery },
-      ranking: {
-        room,
-        inTreatment: { firstRoom, secondRoom },
-        waitingList: {
-          firstRoom: firstRoomWaitingList,
-          secondRoom: secondRoomWaitingList
-        },
-        missedTurn: {
-          firstRoom: firstMissedTurnRoom,
-          secondRoom: secondMissedTurnRoom
-        }
+      room,
+      inTreatment: { firstRoom, secondRoom },
+      waitingList: {
+        firstRoom: firstRoomWaitingList,
+        secondRoom: secondRoomWaitingList
+      },
+      missedTurn: {
+        firstRoom: firstMissedTurnRoom,
+        secondRoom: secondMissedTurnRoom
       }
     } = this.state;
     let listToDisplay = _.isEmpty(room)
@@ -195,26 +196,38 @@ class PatientsRanking extends Component {
         <Header headerTitle={headerTitle} />
         <hr />
         <div className="panel-container">
-          <Panel
-            className="left-panel-sub-container"
-            inTreatment={firstRoom}
-            waitingList={
-              isOneRoomLayout(secondRoomFromQuery)
-                ? listToDisplay
-                : _.chunk(listToDisplay, 3)[0]
-            }
-            isOneRoomLayout={isOneRoomLayout(secondRoomFromQuery)}
-          />
-          {!isOneRoomLayout(secondRoomFromQuery) && (
-            <div className="vertical-separator" />
-          )}
-          {!isOneRoomLayout(secondRoomFromQuery) && (
-            <Panel
-              className="right-panel-sub-container"
-              inTreatment={secondRoom}
-              waitingList={_.chunk(listToDisplay, 3)[1]}
+          <div className="patients-name-and-rank">
+            <PatientsNameAndRank
+              className={`section left ${
+                isOneRoomLayout(secondRoomFromQuery) ? 'one-room-layout' : ''
+              }`}
+              inTreatment={firstRoom}
             />
-          )}
+            {!isOneRoomLayout(secondRoomFromQuery) && (
+              <div className="vertical-separator" />
+            )}
+            {!isOneRoomLayout(secondRoomFromQuery) && (
+              <PatientsNameAndRank
+                className="section right"
+                inTreatment={secondRoom}
+              />
+            )}
+          </div>
+          <hr />
+          <div className="waiting-list">
+            <WaitingList
+              className={`section left ${
+                listToDisplay.length > 3 ? '' : 'align-center'
+              }`}
+              list={_.chunk(listToDisplay, 3)[0]}
+            />
+            {listToDisplay.length > 3 && (
+              <WaitingList
+                className="section right"
+                list={_.chunk(listToDisplay, 3)[1]}
+              />
+            )}
+          </div>
         </div>
         <hr />
         <Footer
